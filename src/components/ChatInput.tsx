@@ -11,7 +11,6 @@ const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
   const [message, setMessage] = useState("");
   const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +48,7 @@ const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
   };
 
   return (
-    <div className="p-4 border-t border-border bg-background">
+    <div className="p-4 bg-card border-t border-border">
       {/* Attached Files Preview */}
       {attachedFiles.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-3">
@@ -73,59 +72,50 @@ const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="relative">
-        <div className="flex items-end gap-2 bg-secondary rounded-2xl p-2">
-          {/* File Upload Button */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            multiple
-            className="hidden"
-            accept="image/*,.pdf,.doc,.docx,.txt"
-          />
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => fileInputRef.current?.click()}
-            className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-full flex-shrink-0"
-          >
-            <Paperclip className="h-5 w-5" />
-          </Button>
+      <form onSubmit={handleSubmit} className="flex items-center gap-3">
+        {/* File Upload Button */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          multiple
+          className="hidden"
+          accept="image/*,.pdf,.doc,.docx,.txt"
+        />
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => fileInputRef.current?.click()}
+          className="text-muted-foreground hover:text-foreground hover:bg-secondary rounded-full flex-shrink-0"
+        >
+          <Paperclip className="h-5 w-5" />
+        </Button>
 
-          {/* Text Input */}
-          <textarea
-            ref={textareaRef}
+        {/* Text Input */}
+        <div className="flex-1 relative">
+          <input
+            type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="कुछ भी पूछें..."
-            rows={1}
-            className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground 
-              resize-none focus:outline-none min-h-[40px] max-h-[200px] py-2 px-2"
-            style={{
-              height: "auto",
-              minHeight: "40px",
-            }}
+            placeholder="अपना संदेश लिखें..."
+            className="w-full px-4 py-3 bg-secondary rounded-full text-foreground 
+              placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
           />
-
-          {/* Send Button */}
-          <Button
-            type="submit"
-            size="icon"
-            disabled={isLoading || (!message.trim() && attachedFiles.length === 0)}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full 
-              flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Send className="h-5 w-5" />
-          </Button>
         </div>
-      </form>
 
-      <p className="text-xs text-muted-foreground text-center mt-3">
-        Mk pharmacy Hub AI आपकी मदद के लिए तैयार है
-      </p>
+        {/* Send Button */}
+        <Button
+          type="submit"
+          size="icon"
+          disabled={isLoading || (!message.trim() && attachedFiles.length === 0)}
+          className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl h-12 w-12
+            flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+        >
+          <Send className="h-5 w-5" />
+        </Button>
+      </form>
     </div>
   );
 };

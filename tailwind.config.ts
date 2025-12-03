@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'Noto Sans Devanagari', 'sans-serif'],
+        sans: ['Poppins', 'Noto Sans Devanagari', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,9 +61,9 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         pharmacy: {
+          green: "hsl(var(--pharmacy-green))",
           teal: "hsl(var(--pharmacy-teal))",
-          "teal-glow": "hsl(var(--pharmacy-teal-glow))",
-          dark: "hsl(var(--pharmacy-dark))",
+          blue: "hsl(var(--pharmacy-blue))",
         },
       },
       borderRadius: {
