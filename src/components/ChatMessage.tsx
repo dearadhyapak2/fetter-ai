@@ -1,4 +1,5 @@
 import { User, Bot, FileText, Image as ImageIcon } from "lucide-react";
+import pharmacyLogo from "@/assets/pharmacy-logo.jpg";
 
 interface AttachedFile {
   name: string;
@@ -24,27 +25,31 @@ const ChatMessage = ({ role, content, files }: ChatMessageProps) => {
 
   return (
     <div
-      className={`flex gap-4 p-4 animate-fade-in ${
-        isUser ? "bg-transparent" : "bg-card/50"
+      className={`flex gap-3 p-4 animate-fade-in ${
+        isUser ? "flex-row-reverse" : ""
       }`}
     >
       {/* Avatar */}
       <div
-        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center
-          ${isUser ? "bg-secondary" : "bg-primary"}`}
+        className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center overflow-hidden
+          ${isUser ? "bg-primary" : "bg-card shadow-md border border-border"}`}
       >
         {isUser ? (
-          <User className="h-5 w-5 text-muted-foreground" />
+          <User className="h-5 w-5 text-primary-foreground" />
         ) : (
-          <Bot className="h-5 w-5 text-primary-foreground" />
+          <img src={pharmacyLogo} alt="AI" className="w-full h-full object-cover" />
         )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 space-y-3">
+      <div
+        className={`max-w-[80%] space-y-2 ${
+          isUser ? "items-end" : "items-start"
+        }`}
+      >
         {/* Attached Files */}
         {files && files.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className={`flex flex-wrap gap-2 ${isUser ? "justify-end" : ""}`}>
             {files.map((file, index) => (
               <div
                 key={index}
@@ -58,7 +63,14 @@ const ChatMessage = ({ role, content, files }: ChatMessageProps) => {
         )}
 
         {/* Message Text */}
-        <div className="text-foreground leading-relaxed whitespace-pre-wrap">
+        <div
+          className={`px-4 py-3 rounded-2xl leading-relaxed whitespace-pre-wrap
+            ${
+              isUser
+                ? "bg-primary text-primary-foreground rounded-br-md"
+                : "bg-card text-foreground rounded-bl-md shadow-sm border border-border"
+            }`}
+        >
           {content}
         </div>
       </div>
