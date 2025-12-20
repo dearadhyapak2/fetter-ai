@@ -1,5 +1,6 @@
 import { History, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import pharmacyLogo from "@/assets/pharmacy-logo.jpg";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -48,9 +49,11 @@ const ChatHeader = ({ onMenuClick, onHistoryClick }: ChatHeaderProps) => {
 
         <div className="flex items-center gap-2">
           {user && (
-            <span className="text-xs text-primary-foreground/80 truncate max-w-[120px] hidden sm:block">
-              {user.email}
-            </span>
+            <Avatar className="h-8 w-8 border-2 border-primary-foreground/30">
+              <AvatarFallback className="bg-primary-foreground text-primary font-bold text-sm">
+                {user.email?.charAt(0).toUpperCase() || "U"}
+              </AvatarFallback>
+            </Avatar>
           )}
 
           <Button
