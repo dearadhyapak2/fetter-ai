@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Send, Plus, X, FileText, Image as ImageIcon, Camera, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ChatInputProps {
   onSendMessage: (message: string, files?: File[]) => void;
@@ -11,6 +12,7 @@ interface ChatInputProps {
 type InputMode = "chat" | "image";
 
 const ChatInput = ({ onSendMessage, onGenerateImage, isLoading }: ChatInputProps) => {
+  const { t } = useLanguage();
   const [message, setMessage] = useState("");
   const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
   const [inputMode, setInputMode] = useState<InputMode>("chat");
@@ -64,14 +66,14 @@ const ChatInput = ({ onSendMessage, onGenerateImage, isLoading }: ChatInputProps
   const menuItems = [
     {
       icon: <FileText className="h-5 w-5" />,
-      label: "File",
+      label: t("file"),
       onClick: () => {
         fileInputRef.current?.click();
       },
     },
     {
       icon: <Sparkles className="h-5 w-5" />,
-      label: "Image Generate",
+      label: t("imageGenerate"),
       onClick: () => {
         setInputMode("image");
         setMenuOpen(false);
@@ -79,7 +81,7 @@ const ChatInput = ({ onSendMessage, onGenerateImage, isLoading }: ChatInputProps
     },
     {
       icon: <Camera className="h-5 w-5" />,
-      label: "Photo",
+      label: t("photo"),
       onClick: () => {
         cameraInputRef.current?.click();
       },
@@ -188,8 +190,8 @@ const ChatInput = ({ onSendMessage, onGenerateImage, isLoading }: ChatInputProps
             onKeyDown={handleKeyDown}
             placeholder={
               inputMode === "image"
-                ? "Image describe करें... (जैसे: सुंदर पहाड़ों की तस्वीर)"
-                : "कुछ पूछें..."
+                ? t("imagePromptPlaceholder")
+                : t("askPlaceholder")
             }
             className={`w-full px-4 py-2.5 rounded-full text-foreground 
               placeholder:text-muted-foreground focus:outline-none focus:ring-1 text-sm ${
