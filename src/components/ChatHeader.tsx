@@ -1,8 +1,9 @@
-import { History, LogOut } from "lucide-react";
+import { History, LogOut, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import fetterAiLogo from "@/assets/fetter-ai-logo.jpg";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -14,6 +15,7 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ onMenuClick, onHistoryClick }: ChatHeaderProps) => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -30,6 +32,14 @@ const ChatHeader = ({ onMenuClick, onHistoryClick }: ChatHeaderProps) => {
     <header className="bg-card border-b border-border px-4 py-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
+          <Button
+            onClick={() => navigate("/")}
+            variant="ghost"
+            size="icon"
+            className="text-muted-foreground hover:text-foreground hover:bg-secondary"
+          >
+            <Home className="h-5 w-5" />
+          </Button>
           <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
             <img
               src={fetterAiLogo}
@@ -76,7 +86,7 @@ const ChatHeader = ({ onMenuClick, onHistoryClick }: ChatHeaderProps) => {
               variant="ghost"
               className="text-muted-foreground hover:text-foreground hover:bg-secondary text-sm"
             >
-              Login
+              {t("login")}
             </Button>
           )}
         </div>
